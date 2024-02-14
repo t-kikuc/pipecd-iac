@@ -17,12 +17,12 @@ resource "aws_apprunner_service" "piped_service" {
   }
 
   instance_configuration {
-    cpu               = "1024" // Default value
-    memory            = "2048" // Default value
+    cpu               = var.apprunner_cpu
+    memory            = var.apprunner_memory
     instance_role_arn = aws_iam_role.piped_instance_role.arn
   }
 
-  auto_scaling_configuration_arn = aws_apprunner_auto_scaling_configuration_version.auto_scaling_config_piped.arn
+  auto_scaling_configuration_arn = aws_apprunner_auto_scaling_configuration_version.auto_scaling_config.arn
 
   // Health check via piped's admin server.
   health_check_configuration {
@@ -40,35 +40,30 @@ resource "aws_apprunner_service" "piped_service" {
       egress_type = "DEFAULT"
     }
   }
-
-  tags = {
-    Name = "piped-service"
-  }
 }
 
-resource "aws_apprunner_auto_scaling_configuration_version" "auto_scaling_config_piped" {
+resource "aws_apprunner_auto_scaling_configuration_version" "auto_scaling_config" {
   auto_scaling_configuration_name = "piped-auto-scaling-config-${var.suffix}"
   // Piped must not scale out/in. It must be always 1.
   min_size        = 1
   max_size        = 1
   max_concurrency = 1 // Piped does not require inbound requests.
 
-  tags = {
-    Name = "piped-auto-scaling-config"
-  }
 }
 
 // A VPC endpoint is requied to limit the access to the AppRunner service.
-resource "aws_apprunner_vpc_ingress_connection" "example" {
-  name        = "example"
-  service_arn = aws_apprunner_service.example.arn
+# resource "aws_apprunner_vpc_ingress_connection" "apprunner_vpc_ingress_connection" {
+#   name        = "piped-apprunner-vpc-ingress-connection-${var.suffix}"
+#   service_arn = aws_apprunner_service.piped_service.arn
 
-  ingress_vpc_configuration {
-    vpc_id          = aws_default_vpc.default.id
-    vpc_endpoint_id = aws_vpc_endpoint.apprunner.id
-  }
+#   ingress_vpc_configuration {
+#     vpc_id          = aws_default_vpc.default.id
+#     vpc_endpoint_id = aws_vpc_endpoint.apprunner.id
+#   }
+# }
 
-  tags = {
-    foo = "bar"
-  }
+// Attach the WAF to deny all inbound traffic.
+resource "aws_wafv2_web_acl_association" "apprunner_waf_association" {
+  resource_arn = aws_apprunner_service.piped_service.arn
+  web_acl_arn  = aws_wafv2_web_acl.piped_apprunner_waf.arn
 }
