@@ -7,3 +7,8 @@ resource "aws_ecr_repository" "ecr_repo" {
     scan_on_push = true
   }
 }
+
+data "aws_ecr_image" "launcher_image" {
+  repository_name = aws_ecr_repository.ecr_repo.name
+  image_tag       = "latest"
+}

@@ -4,7 +4,7 @@ resource "aws_apprunner_service" "piped_service" {
   source_configuration {
     image_repository {
       image_repository_type = "ECR" // private ECR
-      image_identifier      = aws_ecr_repository.ecr_repo.repository_url
+      image_identifier      = data.aws_ecr_image.launcher_image.image_uri
       image_configuration {
         port          = "9085" // Piped listens on this port for health check.
         start_command = "launcher --config-from-aws-secret=true --aws-secret-id=${aws_secretsmanager_secret.secret_piped_config.arn}"
@@ -33,7 +33,7 @@ resource "aws_apprunner_service" "piped_service" {
   network_configuration {
     ingress_configuration {
       // Piped does not require inbound requests.
-      is_publicly_accessible = false
+      is_publicly_accessible = false // NOTE: might be TRUE, 
     }
     egress_configuration {
       // Piped accesses to Git Repositories and the PipeCD Control Plane.
@@ -43,7 +43,7 @@ resource "aws_apprunner_service" "piped_service" {
 }
 
 resource "aws_apprunner_auto_scaling_configuration_version" "auto_scaling_config" {
-  auto_scaling_configuration_name = "piped-auto-scaling-config-${var.suffix}"
+  auto_scaling_configuration_name = "piped-asc-${var.suffix}"
   // Piped must not scale out/in. It must be always 1.
   min_size        = 1
   max_size        = 1
