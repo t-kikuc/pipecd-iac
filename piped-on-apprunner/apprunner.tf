@@ -33,7 +33,8 @@ resource "aws_apprunner_service" "piped_service" {
   network_configuration {
     ingress_configuration {
       // Piped does not require inbound requests.
-      is_publicly_accessible = false // NOTE: might be TRUE, 
+      // We can make this service private without either a VPC endpoint or a WAF.
+      is_publicly_accessible = false
     }
     egress_configuration {
       // Piped accesses to Git Repositories and the PipeCD Control Plane.
@@ -49,21 +50,4 @@ resource "aws_apprunner_auto_scaling_configuration_version" "auto_scaling_config
   max_size        = 1
   max_concurrency = 1 // Piped does not require inbound requests.
 
-}
-
-// A VPC endpoint is requied to limit the access to the AppRunner service.
-# resource "aws_apprunner_vpc_ingress_connection" "apprunner_vpc_ingress_connection" {
-#   name        = "piped-apprunner-vpc-ingress-connection-${var.suffix}"
-#   service_arn = aws_apprunner_service.piped_service.arn
-
-#   ingress_vpc_configuration {
-#     vpc_id          = aws_default_vpc.default.id
-#     vpc_endpoint_id = aws_vpc_endpoint.apprunner.id
-#   }
-# }
-
-// Attach the WAF to deny all inbound traffic.
-resource "aws_wafv2_web_acl_association" "apprunner_waf_association" {
-  resource_arn = aws_apprunner_service.piped_service.arn
-  web_acl_arn  = aws_wafv2_web_acl.piped_apprunner_waf.arn
 }
