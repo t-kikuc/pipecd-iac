@@ -8,6 +8,11 @@ variable "suffix" {
   type        = string
 }
 
+variable "piped_image_version" {
+  description = "The version of the piped image."
+  type        = string
+}
+
 variable "piped_config" {
   description = "The piped config encoded by base64."
   type        = string
