@@ -1,7 +1,7 @@
 # Push the piped image to ECR right after the ECR repository is created in order to avoid error when creating AppRunner service.
 resource "null_resource" "push_image" {
   triggers = {
-    ecr_repo_is_created = "${aws_ecr_repository.ecr_piped_repo.id}"
+    ecr_repo_is_created = "${aws_ecr_repository.ecr_piped_repo.repository_url}"
   }
 
   # The push command is based on https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/docker-push-ecr-image.html
