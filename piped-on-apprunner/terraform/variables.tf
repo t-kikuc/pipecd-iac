@@ -29,5 +29,3 @@ variable "apprunner_memory" {
   default     = "2048"
   type        = string
 }
-
-
