@@ -3,6 +3,8 @@
 # Required param. VAR_FILE: your tfvars file path.
 VAR_FILE=$1
 
+# FIXME: Ideally, we want to complete the deployment by `terraform apply` only once.
+
 # [1] Create an ECR repository and push a piped image to it so that the AppRunner service can use it.
 terraform apply -var-file=$VAR_FILE -target=aws_ecr_repository.ecr_piped_repo --target=null_resource.push_image
 
