@@ -51,13 +51,3 @@ resource "aws_apprunner_auto_scaling_configuration_version" "auto_scaling_config
   max_concurrency = 1 // Piped does not require inbound requests.
 
 }
-
-# # In order to avoid 'InvalidRequestException: Error in assuming access role', 
-# # we need to wait a few seconds after the role is created.
-# resource "time_sleep" "wait_10_seconds" {
-#   create_duration = "30s"
-
-#   triggers = {
-#     apprunner_access_arn = aws_iam_role.piped_ecr_access_role.arn
-#   }
-# }
