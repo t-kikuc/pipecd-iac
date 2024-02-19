@@ -13,7 +13,12 @@ data "aws_ecr_image" "launcher_image" {
   image_tag       = "latest"
 
   // Wait until the image is pushed to the ECR repository.
-  depends_on = [
-    null_resource.push_image
-  ]
+  # depends_on = [
+  #   null_resource.push_image
+  # ]
+}
+
+// for the push target of push_image.sh
+output "ecr_repo_url" {
+  value = aws_ecr_repository.ecr_piped_repo.repository_url
 }

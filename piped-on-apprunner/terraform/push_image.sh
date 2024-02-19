@@ -2,11 +2,23 @@
 
 # Required envs: AWS_REGION, ECR_REPO_URL, PIPED_IMAGE_VERSION
 # check if required envs are set
-if [ -z "$AWS_REGION" ] || [ -z "$ECR_REPO_URL" ] || [ -z "$PIPED_IMAGE_VERSION" ]; then
-  echo "Required envs are not set"
+if [ -z "$AWS_REGION" ]; then
+  echo "Required env 'AWS_REGION' is not set"
   exit 1
 fi
 
+# if [ -z "$ECR_REPO_URL" ]; then
+#   echo "Required env 'ECR_REPO_URL' is not set"
+#   exit 1
+# fi
+
+if [ -z "$PIPED_IMAGE_VERSION" ]; then
+  echo "Required env 'PIPED_IMAGE_VERSION' is not set"
+  exit 1
+fi
+
+# push the image to the ECR repo created by terraform
+ECR_REPO_URL=`terraform output ecr_repo_url  | tr -d '"'`
 PIPED_IMAGE_URL=ghcr.io/pipe-cd/launcher
 
 # login to ECR
