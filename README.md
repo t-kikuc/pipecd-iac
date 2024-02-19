@@ -1,5 +1,5 @@
 # pipecd-iac
-IaC templates helping use of PipeCD
+IaC templates helping use of [PipeCD](https://github.com/pipe-cd/pipecd)
 
 ## Templates
 
