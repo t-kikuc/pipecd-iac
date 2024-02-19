@@ -5,6 +5,7 @@
 <img src="./diagram/architecture.png">
 
 - **NOTE: The version of piped must be >=v0.46.0-rc0 because https://github.com/pipe-cd/pipecd/pull/4785 is required.**
+- If you want to deploy apps to ECS, you need to attach an additional policy to the IAM Role. See [iam.tf](./terraform/iam.tf).
 
 ## Usage > by Terraform
 
