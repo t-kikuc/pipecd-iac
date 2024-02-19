@@ -20,12 +20,12 @@ variable "piped_config" {
 
 variable "apprunner_cpu" {
   description = "The CPU size of the piped on AppRunner"
-  default     = "1024"
+  default     = "256"
   type        = string
 }
 
 variable "apprunner_memory" {
   description = "The memory size of the piped on AppRunner"
-  default     = "2048"
+  default     = "512"
   type        = string
 }
