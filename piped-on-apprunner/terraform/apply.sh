@@ -3,6 +3,8 @@
 # Required param. VAR_FILE: your tfvars file path.
 VAR_FILE=$1
 
+terraform init
+
 # FIXME: Ideally, we want to complete the deployment by `terraform apply` only once.
 # [1] Create pre-requisite resources to avoid error when creating the App Runner service.
 #    1. Create an ECR repository
