@@ -6,12 +6,14 @@
 
 - **NOTE: The version of piped must be >=v0.46.0-rc0 because https://github.com/pipe-cd/pipecd/pull/4785 is required.**
 - If you want to deploy apps to ECS, you need to attach an additional policy to the IAM Role. See [iam.tf](./terraform/iam.tf).
+- In this template, the image is PipeCD's `launcher`. So you can [update the piped via your PipeCD's Web Console](https://pipecd.dev/docs/user-guide/managing-piped/remote-upgrade-remote-config/)
 
-## Usage > by Terraform
+## Prerequisites
+
+## Usage > by [Terraform](./terraform/)
 
 1. Create your .tfvars file. All required variables are defined in [variables.tf](./terraform/variables.tf).
 2. Deploy 
     ```bash
-    cd ./terraform 
-    sh ./apply.sh <YOUR_TFVARS_FILE_PATH>
+    sh apply.sh <YOUR_TFVARS_FILE_PATH>
     ```
