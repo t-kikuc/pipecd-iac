@@ -10,6 +10,10 @@
 
 ## Prerequisites
 
+- You have PipeCD's Control Plane.
+- You have a piped config file.
+- (Optional) You have app.pipecd.yaml and other application config files.
+
 ## Usage > by [Terraform](./terraform/)
 
 1. Create your .tfvars file. All required variables are defined in [variables.tf](./terraform/variables.tf).
