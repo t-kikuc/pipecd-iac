@@ -45,12 +45,12 @@ resource "aws_iam_role_policy_attachment" "piped_instance_policy_attatch_lambda"
   role       = aws_iam_role.piped_instance_role.name
 }
 
-// If you deploy to ECS, you need to attach policy like this. 
+// If you do not deploy to ECS, this resource is not necessary. 
 // To be exact, FullAccess is too much, so you should create a custom limited policy.
-# resource "aws_iam_role_policy_attachment" "piped_instance_policy_attatch_ecs" {
-#   policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
-#   role       = aws_iam_role.piped_instance_role.name
-# }
+resource "aws_iam_role_policy_attachment" "piped_instance_policy_attatch_ecs" {
+  policy_arn = "arn:aws:iam::aws:policy/AmazonECS_FullAccess"
+  role       = aws_iam_role.piped_instance_role.name
+}
 
 resource "aws_iam_role_policy_attachment" "piped_instance_policy_attatch_secrets" {
   policy_arn = aws_iam_policy.piped_instance_secrets_policy.arn
