@@ -5,7 +5,7 @@ resource "null_resource" "push_image" {
   }
 
   # The push command is based on https://docs.aws.amazon.com/ja_jp/AmazonECR/latest/userguide/docker-push-ecr-image.html
-  provisioner "copy_image" {
+  provisioner "local-exec" {
     command = "sh ${path.module}/push_image.sh"
     environment = {
       AWS_REGION          = var.aws_region
