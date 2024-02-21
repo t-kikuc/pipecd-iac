@@ -13,7 +13,7 @@
 - You have PipeCD's Control Plane.
 - You have a piped config file.
 - (Optional) You have app.pipecd.yaml and other application config files.
-- Run Docker executing 
+- Run Docker where you execute the IaC commands.
 
 ## Usage > by [Terraform](./terraform/)
 
