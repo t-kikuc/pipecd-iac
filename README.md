@@ -11,5 +11,5 @@ IaC examples helping use of [PipeCD](https://github.com/pipe-cd/pipecd).
 
 ### [piped-on-ecs](piped-on-ecs/)
 
-- Running a piped launcher on Amazon ECS.
+- Running a piped on Amazon ECS.
 - written in: Terraform
