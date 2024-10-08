@@ -36,7 +36,6 @@ resource "aws_iam_role_policy" "policy_secrets" {
       {
         Action = ["kms:Decrypt"],
         Effect   = "Allow",
-        # Resource = "arn:aws:kms:${var.aws_region}:${data.aws_caller_identity.current.account_id}:${aws_secretsmanager_secret.piped_config_secret.kms_key_id}"
         Resource = "*"
       },
       {
