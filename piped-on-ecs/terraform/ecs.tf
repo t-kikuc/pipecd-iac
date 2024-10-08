@@ -17,7 +17,8 @@ resource "aws_ecs_task_definition" "piped_taskdef" {
         "sh",
         "-c"
       ]
-      // TODO: Use --aws-secret-id and --config-from-aws-secret instead.
+      // Or instead, you can use --aws-secret-id and --config-from-aws-secret without 'secrets'.
+      // https://pipecd.dev/docs/user-guide/managing-piped/runtime-options/
       command = [
         "/bin/sh -c \"piped piped --config-data=$(echo $CONFIG_DATA)\""
       ]
